@@ -1,7 +1,7 @@
-# GraphQL Wrapper for Legacy APIs (Apollo Server + DataLoader + Caching + Auth)
+# GraphQL Wrapper for Legacy APIs 
+(Apollo Server + DataLoader + Caching + Auth)
 
-A portfolio-ready project that modernizes a legacy REST ecosystem by placing a **GraphQL façade**
-in front of existing services.
+A project that modernizes a legacy REST ecosystem by placing a **GraphQL façade** in front of existing services.
 
 This repo includes:
 - **Mock legacy REST API** (`legacy-api/`) simulating common pain points (N+1 calls, inconsistent payloads, latency).
@@ -100,7 +100,7 @@ What this demonstrates:
 
 ---
 
-## Resume-ready highlights
+## Project highlights
 - Built a GraphQL façade over legacy REST services using Apollo Server + TypeScript
 - Implemented DataLoader batching/caching to eliminate N+1 patterns
 - Added auth propagation, timeouts/retries, and response caching to stabilize dependencies
