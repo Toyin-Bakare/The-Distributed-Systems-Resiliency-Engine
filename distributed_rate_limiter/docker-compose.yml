@@ -1,0 +1,22 @@
+version: "3.8"
+name: distributed_rate_limiter
+services:
+  redis:
+    image: redis:7
+    container_name: drl_redis
+    ports:
+      - "6379:6379"
+
+  api:
+    build: .
+    container_name: drl_api
+    environment:
+      REDIS_URL: "redis://redis:6379/0"
+      PORT: "8080"
+      # Demo policy:
+      RL_RATE_PER_SEC: "5"
+      RL_BURST: "10"
+    ports:
+      - "8080:8080"
+    depends_on:
+      - redis

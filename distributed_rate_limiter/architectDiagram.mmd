@@ -1,0 +1,59 @@
+%%{init: {"theme":"neutral"} }%%
+flowchart LR
+  %% =========================
+  %% Distributed Rate Limiter
+  %% =========================
+
+  subgraph Clients
+    C1[Client A(Web/Mobile/Agent)]
+    C2[Client B]
+    C3[Client C]
+  end
+
+  subgraph API["Demo API Service (FastAPI)"]
+    MW["RateLimitMiddleware\n- extracts identity\n- calls limiter\n- sets headers\n- returns 429 on block"]
+    APP["Route Handler\n/v1/hello"]
+    MET["/metrics\nPrometheus exporter"]
+  end
+
+  subgraph Limiter["Rate Limiter Library (rate_limiter/)"]
+    KEYS["keys.py\npick_identity_key()\n(apiKey > userId > IP)"]
+    TB["TokenBucketLimiter\n(token_bucket.py)\n- evalsha\n- reload script on NOSCRIPT"]
+    LUA["token_bucket.lua (Redis Lua)\nAtomic:\n- read state\n- refill tokens\n- allow/deny\n- write state\n- set TTL"]
+    CFG["RateLimitPolicy\n(config.py)\nrate_per_sec, burst, ttl, cost, prefix"]
+    METR["metrics.py\nCounters + Histogram\nallowed/blocked/latency"]
+  end
+
+  subgraph Redis["Redis (shared state)"]
+    H1["Hash per identity key\nfields:\n- tokens (float)\n- ts_ms (int)\nTTL eviction"]
+  end
+
+  subgraph Tools["Validation Tools"]
+    LT["tools/load_test.py\nAsync load generator\n(concurrency, seconds)"]
+  end
+
+  %% Request flow
+  C1 -->|HTTP request| MW
+  C2 -->|HTTP request| MW
+  C3 -->|HTTP request| MW
+
+  MW --> KEYS
+  MW --> CFG
+  MW -->|check(key)| TB
+  TB -->|EVALSHA| LUA
+  LUA -->|HMGET/HSET/EXPIRE| Redis
+  Redis --> H1
+
+  %% Decisions back
+  TB -->|Decision:\nallowed, remaining, retry_after| MW
+  MW -->|Allowed| APP
+  MW -->|Blocked: 429\nRetry-After| C1
+  APP -->|200 OK| C1
+
+  %% Headers + Metrics
+  MW -->|X-RateLimit-Limit\nX-RateLimit-Remaining\nRetry-After| C1
+  MW --> METR
+  METR --> MET
+
+  %% Load testing
+  LT -->|high QPS| MW

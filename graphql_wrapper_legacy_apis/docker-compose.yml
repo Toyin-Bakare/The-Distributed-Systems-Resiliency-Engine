@@ -1,0 +1,21 @@
+version: "3.8"
+name: gql_legacy
+services:
+  legacy-api:
+    build: ./legacy-api
+    container_name: gql_legacy_api
+    ports:
+      - "4001:4001"
+    environment:
+      PORT: "4001"
+
+  graphql-wrapper:
+    build: ./graphql-wrapper
+    container_name: gql_wrapper
+    ports:
+      - "4000:4000"
+    environment:
+      PORT: "4000"
+      LEGACY_BASE_URL: "http://legacy-api:4001"
+    depends_on:
+      - legacy-api
