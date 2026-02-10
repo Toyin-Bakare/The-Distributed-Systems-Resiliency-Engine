@@ -11,7 +11,7 @@ GraphQL gateway that aggregates data from three different "messy" REST APIs (e.g
 
 **Use Case:** "Abstract the nuances of raw data access" for other developers.
 
-📁[GraphQL Wrapper for Legacy APIs](https://github.com/Toyin-Bakare/The-Distributed-Systems-Resiliency-Engine/tree/main/graphql_wrapper_legacy_apis)
+📁[`GraphQL Wrapper for Legacy APIs`](https://github.com/Toyin-Bakare/The-Distributed-Systems-Resiliency-Engine/tree/main/graphql_wrapper_legacy_apis)
 ***
 
 
@@ -24,6 +24,17 @@ Standalone library or sidecar service that provides distributed rate limiting (T
 
 **Use Case:** For distributed systems and service-oriented architecture (SOA).
 
-📁 [Distributed Rate Limiter](https://github.com/Toyin-Bakare/The-Distributed-Systems-Resiliency-Engine/tree/main/distributed_rate_limiter)
+📁 [`Distributed Rate Limiter`](https://github.com/Toyin-Bakare/The-Distributed-Systems-Resiliency-Engine/tree/main/distributed_rate_limiter)
+***
+
+### 3. Observability & Tracing Middleware 
+**Tech:** Kotlin & OpenTelemetry  
+Middleware for an HTTP framework (like Ktor or Micronaut) that automatically injects trace IDs and exports metrics to a Prometheus/Grafana stack.
+
+**Focus:** Developer experience (DX)—how easy is it for another engineer to drop this into their project
+
+**Use Case:** "Technical Excellence" and "Operations."
+
+📁 [`Observability & Tracing Middleware`](https://github.com/Toyin-Bakare/The-Distributed-Systems-Resiliency-Engine/tree/main/observability_tracing_middleware)
 ***
 
