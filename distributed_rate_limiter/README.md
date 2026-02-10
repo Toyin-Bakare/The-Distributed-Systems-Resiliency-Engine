@@ -1,6 +1,7 @@
-# Distributed Rate Limiter (Redis + Lua) — Token Bucket + API Middleware
+# Distributed Rate Limiter 
+(Redis + Lua) — Token Bucket + API Middleware
 
-A portfolio-ready **distributed rate limiting** reference implementation designed for real-world API gateways and microservices.
+A **distributed rate limiting** reference implementation designed for real-world API gateways and microservices.
 It provides **consistent enforcement across multiple instances** (pods/VMs) by storing counters/state in **Redis** and using
 **Lua scripts** for atomic, low-latency decisions.
 
@@ -120,7 +121,7 @@ python tools/load_test.py --url http://localhost:8080/v1/hello --api-key demo --
 
 ---
 
-## Resume-ready highlights
+## Project highlights
 
 - Implemented a distributed token bucket rate limiter using Redis-backed shared state and atomic Lua scripts
 - Built ASGI middleware enforcing per-API-key/user/IP quotas with standard 429 + retry-after semantics
