@@ -1,6 +1,8 @@
-# Financial Ledger with Idempotency (Double-Entry + Outbox + Safe Retries)
+# Financial Ledger with Idempotency 
+(Double-Entry + Outbox + Safe Retries)
 
-A portfolio-ready **financial ledger service** that implements:
+A **financial ledger service** that implements:
+
 - **Double-entry accounting** (every transaction balances to zero)
 - **Idempotency keys** to safely retry requests without double-charging
 - **Outbox pattern** for reliable event publication after commit
@@ -39,7 +41,7 @@ API: http://localhost:8080
 
 ---
 
-## Resume-ready highlights
+## Project highlights
 
 - Implemented a **double-entry ledger** with strict balancing invariants enforced by DB constraints and service logic
 - Added **idempotency-key handling** to support safe retries and prevent duplicate transfers
