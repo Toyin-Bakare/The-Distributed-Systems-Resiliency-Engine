@@ -1,0 +1,38 @@
+version: "3.8"
+name: financial_ledger
+services:
+  postgres:
+    image: postgres:16
+    container_name: ledger_pg
+    environment:
+      POSTGRES_USER: ledger
+      POSTGRES_PASSWORD: ledger
+      POSTGRES_DB: ledger
+    ports:
+      - "5433:5432"
+    volumes:
+      - ledger_pgdata:/var/lib/postgresql/data
+
+  api:
+    build: .
+    container_name: ledger_api
+    environment:
+      LEDGER_DB_URL: "postgresql://ledger:ledger@postgres:5432/ledger"
+      PORT: "8080"
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+
+  worker:
+    build: .
+    container_name: ledger_worker
+    command: ["python", "-m", "ledger.worker"]
+    environment:
+      LEDGER_DB_URL: "postgresql://ledger:ledger@postgres:5432/ledger"
+      WORKER_POLL_SECONDS: "2"
+    depends_on:
+      - postgres
+
+volumes:
+  ledger_pgdata: {}
