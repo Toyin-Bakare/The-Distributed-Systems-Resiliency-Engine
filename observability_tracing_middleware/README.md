@@ -1,6 +1,7 @@
-# Observability & Tracing Middleware (FastAPI + OpenTelemetry + Prometheus + Structured Logs)
+# Observability & Tracing Middleware 
+(FastAPI + OpenTelemetry + Prometheus + Structured Logs)
 
-A portfolio-ready project that implements **drop-in observability middleware** for Python APIs:
+A project that implements **drop-in observability middleware** for Python APIs:
 - **Distributed tracing** with **OpenTelemetry** (W3C Trace Context propagation)
 - **Metrics** with **Prometheus** (HTTP latency, request counts, error counts)
 - **Structured logging** (JSON logs with trace/span IDs, request IDs, latency, status)
@@ -130,7 +131,7 @@ python tools/loadgen.py --base-url http://localhost:8080 --seconds 15 --concurre
 
 ---
 
-## Resume-ready highlights
+## Project highlights
 
 - Built reusable observability middleware: OpenTelemetry tracing + Prometheus metrics + JSON structured logging
 - Implemented W3C trace context propagation and log correlation (trace_id/span_id/request_id)
